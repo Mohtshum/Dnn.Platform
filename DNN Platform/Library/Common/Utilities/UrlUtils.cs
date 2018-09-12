@@ -178,6 +178,7 @@ namespace DotNetNuke.Common.Utilities
             {
                 return true;
             }
+
             string ssloffloadheader = HostController.Instance.GetString("SSLOffloadHeader", "");
             //if the ssloffloadheader variable has been set check to see if a request header with that type exists
             if (!string.IsNullOrEmpty(ssloffloadheader))
@@ -185,14 +186,16 @@ namespace DotNetNuke.Common.Utilities
                 string ssloffload = request.Headers[ssloffloadheader];
                 if (!string.IsNullOrEmpty(ssloffload))
                 {
-                    PortalSettings portalSettings = PortalController.Instance.GetCurrentPortalSettings();
-                    if (portalSettings.ActiveTab.IsSecure)
-                    {
-                        return true;
-                    }
-                    
+                    return true;   
                 }
             }
+
+            PortalSettings portalSettings = PortalController.Instance.GetCurrentPortalSettings();
+            if (portalSettings.ActiveTab.IsSecure)
+            {
+                return true;
+            }
+
             return false;
         }
 
